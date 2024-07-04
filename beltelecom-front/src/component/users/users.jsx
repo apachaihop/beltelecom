@@ -15,9 +15,30 @@ const Users = () => {
 
     const getUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/Users.json');
+            const response = await axios.get('http://localhost:3000/Users2.json');
             // http://localhost:3000/Users.json   localhost:8080/users
             setUser(response.data.users);
+            setError(null);
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    const setUsers = async () => {
+        try {
+            const response = await axios.post('http://10.247.16.47:8081/api/tariffs/find', {
+                photo: "photo",
+                id: "",
+                name: "name",
+                description: "desc",
+                net1: ["url20"]
+              }, {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            });
+            // localhost:8080/tariffs    http://localhost:3000/Ex.json
+            setUser(response.data.rates);
             setError(null);
         } catch (error) {
             setError(error);
@@ -29,6 +50,7 @@ const Users = () => {
             {error ? (
                     <Error error={error} />
                 ) : (
+                    <>
             <div className={"container__second"}>
                 <button className={"button button__user"} onClick={getUsers}>Получить данные</button>
 
@@ -55,9 +77,8 @@ const Users = () => {
                 ))}
                     </div>
                 </div>
-            )}
 
-            <div className="text">
+<div className="text">
                 <p>
                 <span style={{
                     fontSize: 30,
@@ -98,6 +119,10 @@ const Users = () => {
                 </p>
 
             </div>
+            </>
+            )}
+
+            
 
         </div>
     );

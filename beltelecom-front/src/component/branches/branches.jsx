@@ -80,10 +80,9 @@ const Branches = () => {
                                 ))}
                             </tbody>
                         </table>
-            </>
-             )}
 
-            <p className="p">
+
+                        <p className="p">
             <span style={{
                     fontSize: 30,
                     fontWeight: 600
@@ -124,6 +123,11 @@ const Branches = () => {
                     fontWeight: 600
                 }}>Миссия компании «Белтелеком» – объединять людей, предоставляя свободу общения и получения информации.</span>
             </p>
+
+            </>
+             )}
+
+            
 
         </div>
     );

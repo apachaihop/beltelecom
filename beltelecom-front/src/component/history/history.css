@@ -1,0 +1,20 @@
+.history__container{
+    height: 73.8vh;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.history__h1{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
+.history__p{
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
