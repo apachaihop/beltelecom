@@ -9,7 +9,7 @@ const Rates = () => {
     const [rates, setRates] = useState([]);
     const [error, setError] = useState(null);
 
-    const fetchData = = async () => {
+    const fetchData = async () => {
         try {
             const response = await axios.post('http://10.247.16.47:8081/api/tariffs/find', {
                 
