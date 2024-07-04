@@ -1,46 +1,41 @@
 package net.btc.microservices.entities;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.persistence.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "networks")
 public class Network {
 
+    @JsonProperty("network")
     private String network;
+
     @Id
+    @JsonProperty("url")
     private String url;
 
-    public Network(String Network, String Url) {
-        this.network = Network;
-        this.url = Url;
+    public Network(String network, String url) {
+        this.network = network;
+        this.url = url;
     }
 
-    public Network(Network Network) {
-        this.network = Network.network;
-        this.url = Network.url;
-    }
-
-    public Network() {
-    }
+    public Network() {}
 
     public String getNetwork() {
         return this.network;
     }
 
-    public void setNetwork(String Key) {
-        this.network = Key;
+    public void setNetwork(String network) {
+        this.network = network;
     }
 
     public String getUrl() {
         return this.url;
     }
 
-    public void setUrl(String Value) {
-        this.url = Value;
+    public void setUrl(String url) {
+        this.url = url;
     }
-
 }

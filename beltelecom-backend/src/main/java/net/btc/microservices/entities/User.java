@@ -1,5 +1,4 @@
 package net.btc.microservices.entities;
-
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -24,26 +23,12 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Network> networks;
 
-    public User(String Photo, Long Id, String Name, String Description, List<Network> Networks) {
-        this.photo = Photo;
-        this.id = Id;
-        this.name = Name;
-        this.description = Description;
-        this.networks = new ArrayList<>(Networks);
-    }
-
+   
     public User(User user) {
         this.photo = user.photo;
         this.id = user.id;
         this.name = user.name;
         this.description = user.description;
-
-        if(user.networks == null)
-            System.out.println("Networks is not null");
-            
-        else
-            System.out.println("Network is null");
-
         this.networks = new ArrayList<>(user.networks);
     }
 

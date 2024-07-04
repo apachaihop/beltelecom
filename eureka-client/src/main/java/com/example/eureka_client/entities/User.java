@@ -24,14 +24,7 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Network> networks;
 
-    public User(String Photo, Long Id, String Name, String Description, List<Network> Networks) {
-        this.photo = Photo;
-        this.id = Id;
-        this.name = Name;
-        this.description = Description;
-        this.networks = new ArrayList<>(Networks);
-    }
-
+    
     public User(User user) {
         this.photo = user.photo;
         this.id = user.id;

@@ -30,10 +30,7 @@ public class DataBase {
         networks.add(new Network("net1", "url1"));
         networks.add(new Network("net2", "url3"));
         networks.add(new Network("net3", "url3"));
-        User user = new User(null, 123L, "Name", "desc", networks);
-
-        //Temporarily ignores List's etc.
-        System.out.println(getObjectQueryString(user));
+       
     }
 
     //Get SQL query string from any object (no arrays pls). For what? Because I can :)
@@ -114,11 +111,16 @@ public class DataBase {
 
         Class<?> clazz = object.getClass();
         Constructor<?> constructor = clazz.getDeclaredConstructor(clazz);
-        T instance = (T) constructor.newInstance(object);
-        if(object instanceof User)
-            if(((User) object).getNetworks() == null)
+        Object instance = constructor.newInstance(object);
+        if (object instanceof User) {
+            if (((User) object).getNetworks() == null) {
                 System.out.println("Networks after constructor is NULL!!!");
-
+            }
+            for (Network network : ((User) object).getNetworks()) {
+                System.out.println(network.getNetwork());
+                System.out.println(network.getUrl());
+            }
+        }
         entityManager.persist(instance);
         entityManager.getTransaction().commit();
 
@@ -126,7 +128,7 @@ public class DataBase {
 
         appealCount.incrementAndGet();
 
-        return instance;
+        return (T) instance;
     }
 
 }

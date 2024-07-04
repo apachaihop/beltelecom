@@ -9,8 +9,12 @@ import org.springframework.web.client.RestTemplate;
 import com.example.eureka_client.entities.Filial;
 import com.example.eureka_client.entities.Tariff;
 import com.example.eureka_client.entities.User;
-
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.eureka_client.entities.Network;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 
@@ -53,8 +57,29 @@ public class AppController {
 
     @PostMapping("/users")
     public ResponseEntity<User> postUser(@RequestBody User user) {
+        for (Network network : user.getNetworks()) {
+            System.out.println(network.getNetwork());
+            System.out.println(network.getUrl());
+        }
+
+        String jsonUser;
+        try {
+            jsonUser = new ObjectMapper().writeValueAsString(user);
+            System.out.println("Sending User: " + jsonUser);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonUser, headers);
+
         String url = getServiceUrl("MICROSERVICES") + "/users";
-        ResponseEntity<User> response = restTemplate.postForEntity(url, user, User.class);
+
+        ResponseEntity<User> response = restTemplate.postForEntity(url, requestEntity, User.class);
+
         return ResponseEntity.ok(response.getBody());
     }
 
@@ -73,4 +98,3 @@ public class AppController {
         return null;
     }
 }
-

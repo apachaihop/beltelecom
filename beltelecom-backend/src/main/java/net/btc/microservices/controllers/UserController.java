@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -20,29 +22,21 @@ public class UserController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<User> postUser(@RequestBody User user) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        /*
-        Input for networks must be like:
-        "networks": [
-            {
-                "network": "net1",
-                "url": "url1"
-            }
-        ]
-        Output:
-        "networks": [
-            {
-                "net1": "url1"
-            }
-        ]
-
-         */
+        
+          try {
+        String jsonUser = new ObjectMapper().writeValueAsString(user);
+        System.out.println("Received User: " + jsonUser);
+    } catch (JsonProcessingException e) {
+        e.printStackTrace();
+    }
         System.out.println(user.getId());
         System.out.println(user.getDescription());
         System.out.println(user.getName());
         System.out.println(user.getPhoto());
-        System.out.println(user.getNetworks());
-        if(user.getNetworks() == null)
-            System.out.println("Networks is null when get from JSON!!!");
+        for (Network network : user.getNetworks()) {
+            System.out.println(network.getNetwork());
+            System.out.println(network.getUrl());
+        }
         User us = DataBase.persistObject(user);
         if(us.getNetworks() == null)
             System.out.println("Networks is null after persistobject!!!");
@@ -57,18 +51,5 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-
-    //DEBUG ONLY
-    @PostMapping(value = "/example")
-    @ResponseBody
-    public User exampleUser(@RequestBody User user) {
-        List<Network> nets = new ArrayList<>();
-        nets.add(new Network("net1", "url1"));
-        nets.add(new Network("net2", "url2"));
-        nets.add(new Network("net3", "url3"));
-        User newUser = new User("photo", 123L, "name", "desc", nets);
-
-        return newUser;
-    }
 
 }
